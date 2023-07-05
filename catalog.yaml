@@ -59,17 +59,4 @@ spec:
         post:
           summary: Create a new artist
 
----
 
-apiVersion: backstage.io/v1alpha1
-kind: API
-metadata:
-  name: avro-api-yml
-  description: API by example
-spec:
-  type: asyncapi
-  lifecycle: unknown
-  system: backstage-test
-  owner: guests
-  definition:
-    $text: ./asyncapi.yml
