@@ -1,0 +1,75 @@
+apiVersion: backstage.io/v1alpha1
+kind: System
+metadata:
+  name: backstage-test
+  labels:
+    Cluster: FIS.QBE
+  tags:
+    - qbe
+  links:
+    - url: https://grafana.com
+      title: My Dashboard
+      icon: dashboard
+spec:
+  owner: guests
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage-test
+  annotations:
+    github.com/project-slug: HerrSchwarz/backstage-test
+    backstage.io/techdocs-ref: dir:.
+spec:
+  type: other
+  lifecycle: unknown
+  system: backstage-test
+  owner: guests
+  dependsOn: 
+    - component:example-website
+  providesApis:
+    - test-api
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: test-api
+  description: API by example
+spec:
+  type: openapi
+  lifecycle: unknown
+  system: backstage-test
+  owner: guests
+  definition: |
+    openapi: "3.0.0"
+    info:
+      version: 1.0.0
+      title: Artist API
+      license:
+        name: MIT
+    servers:
+      - url: http://artist.spotify.net/v1
+    paths:
+      /artists:
+        get:
+          summary: List all artists
+        post:
+          summary: Create a new artist
+
+---
+
+apiVersion: backstage.io/v1alpha1
+kind: API
+metadata:
+  name: avro-api-yml
+  description: API by example
+spec:
+  type: asyncapi
+  lifecycle: unknown
+  system: backstage-test
+  owner: guests
+  definition:
+    $text: ./asyncapi.yml
